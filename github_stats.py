@@ -492,7 +492,8 @@ Languages:
                 ):
                     continue
                 author = author_obj.get("author", {}).get("login", "")
-                if author != self.username:
+                usernames = {self.username, "austin", "Austin", "captainbleu", "Captainbleu"}
+                if author not in usernames :
                     continue
 
                 for week in author_obj.get("weeks", []):
