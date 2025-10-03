@@ -2,11 +2,10 @@
 
 import asyncio
 import os
-from typing import Dict, List, Optional, Set, Tuple, Any, cast
+from typing import Any, Dict, List, Optional, Set, Tuple, cast
 
 import aiohttp
 import requests
-
 
 ###############################################################################
 # Main Classes
@@ -134,7 +133,7 @@ class Queries(object):
             direction: DESC
         }},
         isFork: false,
-        after: {"null" if owned_cursor is None else '"'+ owned_cursor +'"'}
+        after: {"null" if owned_cursor is None else '"' + owned_cursor + '"'}
     ) {{
       pageInfo {{
         hasNextPage
@@ -170,7 +169,7 @@ class Queries(object):
             REPOSITORY,
             PULL_REQUEST_REVIEW
         ]
-        after: {"null" if contrib_cursor is None else '"'+ contrib_cursor +'"'}
+        after: {"null" if contrib_cursor is None else '"' + contrib_cursor + '"'}
     ) {{
       pageInfo {{
         hasNextPage
@@ -492,8 +491,15 @@ Languages:
                 ):
                     continue
                 author = author_obj.get("author", {}).get("login", "")
-                usernames = {self.username, "austin", "Austin", "captainbleu", "Captainbleu"}
-                if author not in usernames :
+                usernames = {
+                    self.username,
+                    "austin",
+                    "Austin",
+                    "captainbleu",
+                    "Captainbleu",
+                    "Eliott A. Roussille",
+                }
+                if author not in usernames:
                     continue
 
                 for week in author_obj.get("weeks", []):
