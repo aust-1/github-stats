@@ -493,6 +493,7 @@ Languages:
                 author = author_obj.get("author", {}).get("login", "")
                 usernames = {
                     self.username,
+                    "aust-1",
                     "austin",
                     "Austin",
                     "captainbleu",
