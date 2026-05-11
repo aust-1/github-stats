@@ -1,59 +1,67 @@
-# .github/workflows/generate-stats-images.yml
 name: Generate Stats Images
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   schedule:
-    - cron: "28 5 * * *"
+    - cron: "28 4 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
-concurrency:
-  group: generate-stats-images
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
 
     steps:
+      # Check out repository under $GITHUB_WORKSPACE, so the job can access it
       - uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
 
-      - name: Set up Python 3.11
+      - name: Debug context
+        run: |
+          echo "EVENT=${{ github.event_name }}"
+          echo "REF=${{ github.ref }} SHA=${{ github.sha }}"
+          echo "DATE (UTC): $(date -u)"
+          echo "DATE (local): $(date)"
+          python3 -V || true
+          env | sort
+
+      # Run using Python 3.8 for consistency and aiohttp
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.8"
           architecture: "x64"
           cache: "pip"
 
+      # Install dependencies with `pip`
       - name: Install requirements
         run: |
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install -r requirements.txt
+          python3 -m pip install --upgrade pip setuptools wheel
+          python3 -m pip install -r requirements.txt
 
+      # Generate all statistics images
       - name: Generate images
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXCLUDED: ${{ secrets.EXCLUDED }}
           EXCLUDED_LANGS: ${{ secrets.EXCLUDED_LANGS }}
-          EXCLUDE_FORKED_REPOS: "true"
+          EXCLUDE_FORKED_REPOS: "false"
         run: |
-          python --version
-          timeout 12m python generate_images.py
+          python3 --version
+          python3 generate_images.py
 
+      # Commit all changed files to the repository
       - name: Commit to the repo
         run: |
           git config --global user.name "jstrieb/github-stats"
           git config --global user.email "github-stats[bot]@jstrieb.github.io"
-          git add .
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "Update generated files"
-          git push
+          git add -A
+          # Force the build to succeed, even if no files were changed
+          git commit -m 'Update generated files' || true
+          git push origin HEAD:master
