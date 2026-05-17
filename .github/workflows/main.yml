@@ -35,7 +35,12 @@ jobs:
           git config --global user.email "github-stats[bot]@jstrieb.github.io"
           # Push generated files to the generated branch
           git pull
-          git checkout generated || git checkout -b generated
+          git fetch origin +refs/heads/generated:refs/remotes/origin/generated || true
+          if git show-ref --verify --quiet refs/remotes/origin/generated; then
+            git switch --track origin/generated
+          else
+            git switch --create generated
+          fi
 
       - name: Generate images
         run: |
