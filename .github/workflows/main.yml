@@ -54,6 +54,47 @@ jobs:
           # TODO: Remove this when they get their API working again
           # https://github.com/orgs/community/discussions/192970
           MAX_RETRIES: 5
+          # Dump complet (e-mails, dépôts privés, vues) : hors du dépôt, jamais publié tel quel.
+          JSON_OUTPUT_FILE: ${{ runner.temp }}/stats.json
+
+      # Pour eliott-roussille.fr : uniquement des agrégats publics, lus au build du site (sans token).
+      - name: Export portfolio.json
+        env:
+          FULL: ${{ runner.temp }}/stats.json
+        run: |
+          mkdir -p generated
+          jq '{
+            generatedAt: (now | todate),
+            contributions: {
+              commits: .commit_contributions,
+              prs: .pr_contributions,
+              issues: .issue_contributions,
+              reviews: .review_contributions,
+              repos: .repo_contributions
+            },
+            stars: ([.repositories[].stars] | add // 0),
+            linesChanged: ([.repositories[].lines_changed] | add // 0),
+            repoCount: (.repositories | length),
+            languages: (
+              [.repositories[] | (.languages // [])[]]
+              | map(select(.name != "Jupyter Notebook"))
+              | group_by(.name)
+              | map({ name: .[0].name, size: (map(.size) | add), color: .[0].color })
+            ),
+            repositories: [.repositories[] | select(.private | not) | { name, stars }]
+          }' "$FULL" > generated/portfolio.json
+
+          # Garde-fou : aucune clé en plus, aucun nom de dépôt privé.
+          jq -e 'keys == ["contributions","generatedAt","languages","linesChanged","repoCount","repositories","stars"]' generated/portfolio.json
+          jq -e --slurpfile full "$FULL" \
+            '([$full[0].repositories[] | select(.private) | .name]) as $priv
+             | [.repositories[].name] | all(. as $n | $priv | index($n) | not)' \
+            generated/portfolio.json
+          if grep -qiE '"(emails|views|user)"' generated/portfolio.json; then
+            echo "portfolio.json contient une donnée privée" >&2
+            exit 1
+          fi
+          rm -f "$FULL"
 
       - name: Commit to the repo
         run: |
