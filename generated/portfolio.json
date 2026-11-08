@@ -1,0 +1,258 @@
+{
+  "generatedAt": "2026-11-08T18:53:13Z",
+  "contributions": {
+    "commits": 3922,
+    "prs": 43,
+    "issues": 110,
+    "reviews": 5,
+    "repos": 26
+  },
+  "stars": 111,
+  "linesChanged": 5091868,
+  "repoCount": 43,
+  "languages": [
+    {
+      "name": "C",
+      "size": 17926,
+      "color": "#555555"
+    },
+    {
+      "name": "C#",
+      "size": 3405923,
+      "color": "#7355dd"
+    },
+    {
+      "name": "C++",
+      "size": 294104,
+      "color": "#f34b7d"
+    },
+    {
+      "name": "CMake",
+      "size": 772,
+      "color": "#DA3434"
+    },
+    {
+      "name": "CSS",
+      "size": 193105,
+      "color": "#663399"
+    },
+    {
+      "name": "Dockerfile",
+      "size": 27992,
+      "color": "#384d54"
+    },
+    {
+      "name": "HLSL",
+      "size": 13994,
+      "color": "#aace60"
+    },
+    {
+      "name": "HTML",
+      "size": 198838,
+      "color": "#e34c26"
+    },
+    {
+      "name": "Java",
+      "size": 1213,
+      "color": "#b07219"
+    },
+    {
+      "name": "JavaScript",
+      "size": 644129,
+      "color": "#f1e05a"
+    },
+    {
+      "name": "Kotlin",
+      "size": 114307,
+      "color": "#A97BFF"
+    },
+    {
+      "name": "Makefile",
+      "size": 2603,
+      "color": "#427819"
+    },
+    {
+      "name": "Objective-C",
+      "size": 24102,
+      "color": "#438eff"
+    },
+    {
+      "name": "PHP",
+      "size": 43567,
+      "color": "#4F5D95"
+    },
+    {
+      "name": "PLpgSQL",
+      "size": 526076,
+      "color": "#336790"
+    },
+    {
+      "name": "Python",
+      "size": 9801081,
+      "color": "#3572A5"
+    },
+    {
+      "name": "SCSS",
+      "size": 1392,
+      "color": "#c6538c"
+    },
+    {
+      "name": "ShaderLab",
+      "size": 102750,
+      "color": "#222c37"
+    },
+    {
+      "name": "Shell",
+      "size": 90636,
+      "color": "#89e051"
+    },
+    {
+      "name": "Svelte",
+      "size": 3133775,
+      "color": "#ff3e00"
+    },
+    {
+      "name": "TeX",
+      "size": 33884,
+      "color": "#3D6117"
+    },
+    {
+      "name": "TypeScript",
+      "size": 2041484,
+      "color": "#3178c6"
+    },
+    {
+      "name": "Vim Snippet",
+      "size": 1814,
+      "color": "#199f4b"
+    },
+    {
+      "name": "Vue",
+      "size": 306787,
+      "color": "#41b883"
+    },
+    {
+      "name": "Zig",
+      "size": 63512,
+      "color": "#ec915c"
+    }
+  ],
+  "repositories": [
+    {
+      "name": "DaVinciBot/cash",
+      "stars": 4
+    },
+    {
+      "name": "DaVinciBot/CoupeDeRobotique",
+      "stars": 20
+    },
+    {
+      "name": "DaVinciBot/formation",
+      "stars": 2
+    },
+    {
+      "name": "aust-1/github-stats",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/davincibot.fr",
+      "stars": 2
+    },
+    {
+      "name": "aust-1/sudoku_solver",
+      "stars": 4
+    },
+    {
+      "name": "DaVinciBot/shared-workflows",
+      "stars": 2
+    },
+    {
+      "name": "DaVinciBot/Component-Lib",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/DocVB",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/.github",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/deezer-export",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/Boggle",
+      "stars": 5
+    },
+    {
+      "name": "aust-1/LivInParis",
+      "stars": 2
+    },
+    {
+      "name": "aust-1/Alterdune",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/helloasso-webhooks",
+      "stars": 1
+    },
+    {
+      "name": "MorganKryze/ConsoleAppVisuals",
+      "stars": 38
+    },
+    {
+      "name": "DeVinci-FabLab/FablaBot",
+      "stars": 5
+    },
+    {
+      "name": "aust-1/OOR",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/seterra-parisian-metro",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/Markov-Decision-Process",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/lectures-notes",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/portfolio",
+      "stars": 1
+    },
+    {
+      "name": "DeVinci-FabLab/home",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/TaskBoard-widget",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/CoreWatcher",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/KarateRendu",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/vps-strasbourg-opt",
+      "stars": 0
+    },
+    {
+      "name": "DaVinciBot/.github",
+      "stars": 0
+    },
+    {
+      "name": "aust-1/bourse-tracker",
+      "stars": 0
+    }
+  ]
+}
