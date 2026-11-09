@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-08T18:53:13Z",
+  "generatedAt": "2026-11-09T13:04:24Z",
   "contributions": {
-    "commits": 3922,
+    "commits": 3950,
     "prs": 43,
     "issues": 110,
     "reviews": 5,
     "repos": 26
   },
   "stars": 111,
-  "linesChanged": 5091868,
+  "linesChanged": 5092912,
   "repoCount": 43,
   "languages": [
     {
@@ -33,12 +33,12 @@
     },
     {
       "name": "CSS",
-      "size": 193105,
+      "size": 193718,
       "color": "#663399"
     },
     {
       "name": "Dockerfile",
-      "size": 27992,
+      "size": 29450,
       "color": "#384d54"
     },
     {
@@ -48,7 +48,7 @@
     },
     {
       "name": "HTML",
-      "size": 198838,
+      "size": 198856,
       "color": "#e34c26"
     },
     {
@@ -103,12 +103,12 @@
     },
     {
       "name": "Shell",
-      "size": 90636,
+      "size": 108949,
       "color": "#89e051"
     },
     {
       "name": "Svelte",
-      "size": 3133775,
+      "size": 3159353,
       "color": "#ff3e00"
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "name": "TypeScript",
-      "size": 2041484,
+      "size": 2094591,
       "color": "#3178c6"
     },
     {
@@ -151,12 +151,16 @@
       "stars": 2
     },
     {
+      "name": "DaVinciBot/davincibot.fr",
+      "stars": 2
+    },
+    {
       "name": "aust-1/github-stats",
       "stars": 1
     },
     {
-      "name": "DaVinciBot/davincibot.fr",
-      "stars": 2
+      "name": "DaVinciBot/DocVB",
+      "stars": 1
     },
     {
       "name": "aust-1/sudoku_solver",
@@ -171,16 +175,16 @@
       "stars": 1
     },
     {
-      "name": "DaVinciBot/DocVB",
-      "stars": 1
-    },
-    {
       "name": "aust-1/.github",
       "stars": 1
     },
     {
       "name": "aust-1/deezer-export",
       "stars": 1
+    },
+    {
+      "name": "aust-1/vps-strasbourg-opt",
+      "stars": 0
     },
     {
       "name": "aust-1/Boggle",
@@ -191,11 +195,11 @@
       "stars": 2
     },
     {
-      "name": "aust-1/Alterdune",
+      "name": "DaVinciBot/helloasso-webhooks",
       "stars": 1
     },
     {
-      "name": "DaVinciBot/helloasso-webhooks",
+      "name": "aust-1/Alterdune",
       "stars": 1
     },
     {
@@ -207,7 +211,7 @@
       "stars": 5
     },
     {
-      "name": "aust-1/OOR",
+      "name": "DeVinci-FabLab/home",
       "stars": 1
     },
     {
@@ -215,7 +219,7 @@
       "stars": 1
     },
     {
-      "name": "aust-1/Markov-Decision-Process",
+      "name": "aust-1/TaskBoard-widget",
       "stars": 1
     },
     {
@@ -223,19 +227,7 @@
       "stars": 1
     },
     {
-      "name": "aust-1/portfolio",
-      "stars": 1
-    },
-    {
-      "name": "DeVinci-FabLab/home",
-      "stars": 1
-    },
-    {
-      "name": "aust-1/TaskBoard-widget",
-      "stars": 1
-    },
-    {
-      "name": "aust-1/CoreWatcher",
+      "name": "aust-1/OOR",
       "stars": 1
     },
     {
@@ -243,8 +235,16 @@
       "stars": 1
     },
     {
-      "name": "aust-1/vps-strasbourg-opt",
-      "stars": 0
+      "name": "aust-1/CoreWatcher",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/portfolio",
+      "stars": 1
+    },
+    {
+      "name": "aust-1/Markov-Decision-Process",
+      "stars": 1
     },
     {
       "name": "DaVinciBot/.github",
