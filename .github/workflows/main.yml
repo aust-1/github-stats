@@ -7,9 +7,20 @@ on:
   schedule:
     - cron: "28 4 * * *"
   workflow_dispatch:
+    inputs:
+      reset_history:
+        description: "Recréer la branche generated sans historique (branche orpheline, push forcé)"
+        type: boolean
+        default: false
 
 permissions:
-  contents: write
+  contents: read
+
+# Deux exécutions simultanées partiraient du même état de generated :
+# la seconde attend la fin de la première au lieu d'échouer au push.
+concurrency:
+  group: generate-stats
+  cancel-in-progress: false
 
 defaults:
   run:
@@ -18,10 +29,12 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
-      - uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29 # v2 tag
+      - uses: mlugg/setup-zig@d1434d08867e3ee9daa34448df10607b98908d29 # v2.2.1
         with:
           version: 0.16.0
 
@@ -29,23 +42,15 @@ jobs:
         run: |
           zig build
 
-      - name: Checkout history branch
-        run: |
-          git config --global user.name "jstrieb/github-stats"
-          git config --global user.email "github-stats[bot]@jstrieb.github.io"
-          # Push generated files to the generated branch
-          git pull
-          git fetch origin +refs/heads/generated:refs/remotes/origin/generated || true
-          if git show-ref --verify --quiet refs/remotes/origin/generated; then
-            git switch --track origin/generated
-          else
-            git switch --create generated
-          fi
-
       - name: Generate images
         run: |
-          ./zig-out/bin/github-stats
+          mkdir -p "$OUTPUT_DIR"
+          ./zig-out/bin/github-stats \
+            --overview-output-file "$OUTPUT_DIR/overview.svg" \
+            --languages-output-file "$OUTPUT_DIR/languages.svg" \
+            --public-json-output-file "$OUTPUT_DIR/portfolio.json"
         env:
+          OUTPUT_DIR: ${{ runner.temp }}/output
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           EXCLUDE_REPOS: ${{ secrets.EXCLUDE_REPOS }}
           EXCLUDE_LANGS: ${{ secrets.EXCLUDE_LANGS }}
@@ -54,51 +59,77 @@ jobs:
           # TODO: Remove this when they get their API working again
           # https://github.com/orgs/community/discussions/192970
           MAX_RETRIES: 5
-          # Dump complet (e-mails, dépôts privés, vues) : hors du dépôt, jamais publié tel quel.
+          # Dump complet (e-mails, dépôts privés, vues) : hors du dépôt, jamais publié,
+          # seulement lu par les garde-fous de l'étape suivante.
           JSON_OUTPUT_FILE: ${{ runner.temp }}/stats.json
 
-      # Pour eliott-roussille.fr : uniquement des agrégats publics, lus au build du site (sans token).
-      - name: Export portfolio.json
+      # portfolio.json est lu au build de eliott-roussille.fr (sans token) : uniquement des
+      # agrégats publics, calculés par le binaire avec les mêmes exclusions que les images.
+      - name: Check portfolio.json
         env:
           FULL: ${{ runner.temp }}/stats.json
+          OUT: ${{ runner.temp }}/output/portfolio.json
         run: |
-          mkdir -p generated
-          jq '{
-            generatedAt: (now | todate),
-            contributions: {
-              commits: .commit_contributions,
-              prs: .pr_contributions,
-              issues: .issue_contributions,
-              reviews: .review_contributions,
-              repos: .repo_contributions
-            },
-            stars: ([.repositories[].stars] | add // 0),
-            linesChanged: ([.repositories[].lines_changed] | add // 0),
-            repoCount: (.repositories | length),
-            languages: (
-              [.repositories[] | (.languages // [])[]]
-              | map(select(.name != "Jupyter Notebook"))
-              | group_by(.name)
-              | map({ name: .[0].name, size: (map(.size) | add), color: .[0].color })
-            ),
-            repositories: [.repositories[] | select(.private | not) | { name, stars }]
-          }' "$FULL" > generated/portfolio.json
-
-          # Garde-fou : aucune clé en plus, aucun nom de dépôt privé.
-          jq -e 'keys == ["contributions","generatedAt","languages","linesChanged","repoCount","repositories","stars"]' generated/portfolio.json
+          # Garde-fou : aucune clé en plus, aucun nom de dépôt privé, aucune donnée privée.
+          jq -e 'keys == ["contributions","generatedAt","languages","linesChanged","repoCount","repositories","stars"]' "$OUT"
           jq -e --slurpfile full "$FULL" \
             '([$full[0].repositories[] | select(.private) | .name]) as $priv
              | [.repositories[].name] | all(. as $n | $priv | index($n) | not)' \
-            generated/portfolio.json
-          if grep -qiE '"(emails|views|user)"' generated/portfolio.json; then
+            "$OUT"
+          if grep -qiE '"(emails|views|user)"' "$OUT"; then
             echo "portfolio.json contient une donnée privée" >&2
             exit 1
           fi
           rm -f "$FULL"
 
-      - name: Commit to the repo
+      # La branche generated ne contient que les sorties : elle est remplie depuis un
+      # worktree séparé, sans rien copier du dossier de travail de master.
+      - name: Publish to the generated branch
+        env:
+          OUTPUT_DIR: ${{ runner.temp }}/output
+          BRANCH_DIR: ${{ runner.temp }}/generated
+          RESET_HISTORY: ${{ inputs.reset_history || false }}
         run: |
-          git add .
-          # Force the build to succeed, even if no files were changed
-          git commit -m 'Update generated files' || true
-          git push --set-upstream origin generated
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [[ "$RESET_HISTORY" != "true" ]] \
+            && git ls-remote --exit-code --heads origin generated; then
+            git fetch --depth=1 --no-tags origin +refs/heads/generated:refs/remotes/origin/generated
+            git worktree add -B generated "$BRANCH_DIR" origin/generated
+            push_args=()
+          else
+            git worktree add --orphan -b generated "$BRANCH_DIR"
+            push_args=(--force)
+          fi
+
+          cd "$BRANCH_DIR"
+          git rm -r --quiet --ignore-unmatch -- .
+          cp "$OUTPUT_DIR/overview.svg" "$OUTPUT_DIR/languages.svg" "$OUTPUT_DIR/portfolio.json" .
+          # Ancien chemin, encore lu par aust-1/portfolio : à supprimer une fois le site
+          # passé à https://raw.githubusercontent.com/aust-1/github-stats/generated/portfolio.json
+          mkdir -p generated
+          cp "$OUTPUT_DIR/portfolio.json" generated/portfolio.json
+          cat > README.md <<'EOF'
+          # github-stats : fichiers générés
+
+          Cette branche est écrite chaque jour par le workflow « Generate Stats Images »
+          de [`master`](https://github.com/aust-1/github-stats/tree/master), qui contient le code
+          et la documentation. Ne pas la modifier à la main.
+
+          | Fichier | Contenu |
+          | ------- | ------- |
+          | [`overview.svg`](https://github.com/aust-1/github-stats/blob/generated/overview.svg) | Vue d'ensemble des statistiques |
+          | [`languages.svg`](https://github.com/aust-1/github-stats/blob/generated/languages.svg) | Langages les plus utilisés |
+          | [`portfolio.json`](https://raw.githubusercontent.com/aust-1/github-stats/generated/portfolio.json) | Agrégats publics lus par eliott-roussille.fr |
+          | `generated/portfolio.json` | Copie temporaire de `portfolio.json` à l'ancien chemin |
+          EOF
+
+          git add --all
+          # Pas de commit vide si rien n'a changé
+          if git diff --cached --quiet; then
+            echo "Aucun changement"
+          else
+            git commit --quiet -m "Update generated files"
+          fi
+          git push "${push_args[@]}" origin generated
