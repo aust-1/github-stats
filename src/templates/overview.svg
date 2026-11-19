@@ -78,6 +78,13 @@ tr {
     transform: translateX(0);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  tr {
+    animation: none;
+    transform: none;
+  }
+}
 </style>
 <g>
 <rect x="5" y="5" id="background" />

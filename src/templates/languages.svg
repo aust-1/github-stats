@@ -64,6 +64,13 @@ li {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  li {
+    animation: none;
+    transform: none;
+  }
+}
+
 div.ellipsis {
   height: 176px;
   overflow: hidden;
