@@ -39,6 +39,7 @@ const Args = struct {
     access_token: ?[]const u8 = null,
     json_input_file: ?[]const u8 = null,
     json_output_file: ?[]const u8 = null,
+    public_json_output_file: ?[]const u8 = null,
     silent: bool = false,
     debug: bool = false,
     verbose: bool = false,
@@ -161,6 +162,95 @@ fn languages(
         struct { lang_list: []const u8, progress: []const u8 }{
             .lang_list = try std.mem.concat(a, u8, lang_list),
             .progress = try std.mem.concat(a, u8, progress),
+        },
+    );
+}
+
+/// Public aggregates only, for sites that read them without a token (for
+/// example portfolio.json). Uses the same exclusions as the images: excluded
+/// languages are already left out of `aggregate_stats`, excluded and private
+/// repositories are left out of the repository list. Never writes emails,
+/// views, the user name or the name of a private repository.
+fn publicJson(
+    arena: *std.heap.ArenaAllocator,
+    io: std.Io,
+    stats: Statistics,
+    aggregate_stats: anytype,
+    exclude_repos: []const []const u8,
+) ![]const u8 {
+    const a = arena.allocator();
+
+    const Language = struct {
+        name: []const u8,
+        size: u64,
+        color: ?[]const u8,
+    };
+    const languages_list = try a.alloc(
+        Language,
+        aggregate_stats.languages.count(),
+    );
+    for (
+        aggregate_stats.languages.keys(),
+        aggregate_stats.languages.values(),
+        languages_list,
+    ) |name, size, *language| {
+        language.* = .{
+            .name = name,
+            .size = size,
+            .color = aggregate_stats.language_colors.get(name),
+        };
+    }
+
+    const Repository = struct { name: []const u8, stars: u32 };
+    var repositories: std.ArrayList(Repository) = .empty;
+    for (stats.repositories) |repository| {
+        if (repository.private or
+            glob.matchAny(exclude_repos, repository.name))
+        {
+            continue;
+        }
+        try repositories.append(a, .{
+            .name = repository.name,
+            .stars = repository.stars,
+        });
+    }
+
+    return try std.json.Stringify.valueAlloc(a, .{
+        .generatedAt = try isoTimestamp(a, io),
+        .contributions = .{
+            .commits = stats.commit_contributions,
+            .prs = stats.pr_contributions,
+            .issues = stats.issue_contributions,
+            .reviews = stats.review_contributions,
+            .repos = stats.repo_contributions,
+        },
+        .stars = aggregate_stats.stars,
+        .linesChanged = aggregate_stats.lines_changed,
+        .repoCount = aggregate_stats.repos,
+        .languages = languages_list,
+        .repositories = repositories.items,
+    }, .{ .whitespace = .indent_2 });
+}
+
+/// Current UTC time as YYYY-MM-DDTHH:MM:SSZ.
+fn isoTimestamp(allocator: std.mem.Allocator, io: std.Io) ![]const u8 {
+    const seconds = std.Io.Clock.real.now(io).toSeconds();
+    const epoch_seconds: std.time.epoch.EpochSeconds = .{
+        .secs = @intCast(seconds),
+    };
+    const year_day = epoch_seconds.getEpochDay().calculateYearDay();
+    const month_day = year_day.calculateMonthDay();
+    const day_seconds = epoch_seconds.getDaySeconds();
+    return try std.fmt.allocPrint(
+        allocator,
+        "{d:0>4}-{d:0>2}-{d:0>2}T{d:0>2}:{d:0>2}:{d:0>2}Z",
+        .{
+            year_day.year,
+            month_day.month.numeric(),
+            month_day.day_index + 1,
+            day_seconds.getHoursIntoDay(),
+            day_seconds.getMinutesIntoHour(),
+            day_seconds.getSecondsIntoMinute(),
         },
     );
 }
@@ -303,6 +393,22 @@ pub fn main(init: std.process.Init) !void {
             return self.values[a] > self.values[b];
         }
     }{ .values = aggregate_stats.languages.values() });
+
+    if (args.public_json_output_file) |path| {
+        var arena = std.heap.ArenaAllocator.init(allocator);
+        defer arena.deinit();
+        try writeFile(
+            io,
+            path,
+            try publicJson(
+                &arena,
+                io,
+                stats,
+                aggregate_stats,
+                exclude_repos orelse &.{},
+            ),
+        );
+    }
 
     {
         var arena = std.heap.ArenaAllocator.init(allocator);
