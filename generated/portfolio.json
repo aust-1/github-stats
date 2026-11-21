@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T13:14:13Z",
+  "generatedAt": "2026-11-21T12:50:29Z",
   "contributions": {
     "commits": 4202,
     "prs": 221,
@@ -147,16 +147,12 @@
       "stars": 0
     },
     {
-      "name": "aust-1/sudoku_solver",
-      "stars": 4
-    },
-    {
       "name": "DaVinciBot/CoupeDeRobotique",
       "stars": 20
     },
     {
-      "name": "DaVinciBot/formation",
-      "stars": 2
+      "name": "aust-1/sudoku_solver",
+      "stars": 4
     },
     {
       "name": "DaVinciBot/davincibot.fr",
@@ -171,6 +167,10 @@
       "stars": 1
     },
     {
+      "name": "DaVinciBot/formation",
+      "stars": 2
+    },
+    {
       "name": "aust-1/bourse-tracker",
       "stars": 0
     },
@@ -179,16 +179,12 @@
       "stars": 1
     },
     {
-      "name": "aust-1/.github",
-      "stars": 1
-    },
-    {
       "name": "aust-1/lectures-notes",
       "stars": 1
     },
     {
-      "name": "DaVinciBot/shared-workflows",
-      "stars": 2
+      "name": "aust-1/.github",
+      "stars": 1
     },
     {
       "name": "aust-1/deezer-export",
@@ -197,10 +193,6 @@
     {
       "name": "aust-1/vps-strasbourg-opt",
       "stars": 0
-    },
-    {
-      "name": "DaVinciBot/helloasso-webhooks",
-      "stars": 1
     },
     {
       "name": "aust-1/github-stats",
@@ -223,6 +215,10 @@
       "stars": 5
     },
     {
+      "name": "DaVinciBot/shared-workflows",
+      "stars": 2
+    },
+    {
       "name": "aust-1/LivInParis",
       "stars": 2
     },
@@ -232,6 +228,10 @@
     },
     {
       "name": "aust-1/Alterdune",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/helloasso-webhooks",
       "stars": 1
     },
     {
