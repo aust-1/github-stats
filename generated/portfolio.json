@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-21T12:50:29Z",
+  "generatedAt": "2026-11-22T12:43:09Z",
   "contributions": {
-    "commits": 4202,
-    "prs": 221,
+    "commits": 4207,
+    "prs": 222,
     "issues": 245,
     "reviews": 5,
     "repos": 27
   },
   "stars": 112,
-  "linesChanged": 5213142,
+  "linesChanged": 5213806,
   "repoCount": 44,
   "languages": [
     {
@@ -88,7 +88,7 @@
     },
     {
       "name": "Python",
-      "size": 9918702,
+      "size": 9932661,
       "color": "#3572A5"
     },
     {
@@ -103,7 +103,7 @@
     },
     {
       "name": "Shell",
-      "size": 115049,
+      "size": 115893,
       "color": "#89e051"
     },
     {
@@ -139,12 +139,12 @@
   ],
   "repositories": [
     {
-      "name": "DaVinciBot/cash",
-      "stars": 5
-    },
-    {
       "name": "aust-1/phishing-url-detection",
       "stars": 0
+    },
+    {
+      "name": "DaVinciBot/cash",
+      "stars": 5
     },
     {
       "name": "DaVinciBot/CoupeDeRobotique",
@@ -155,15 +155,7 @@
       "stars": 4
     },
     {
-      "name": "DaVinciBot/davincibot.fr",
-      "stars": 2
-    },
-    {
       "name": "aust-1/portfolio",
-      "stars": 1
-    },
-    {
-      "name": "DaVinciBot/Component-Lib",
       "stars": 1
     },
     {
@@ -175,7 +167,15 @@
       "stars": 0
     },
     {
+      "name": "DaVinciBot/davincibot.fr",
+      "stars": 2
+    },
+    {
       "name": "DaVinciBot/DocVB",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/Component-Lib",
       "stars": 1
     },
     {
@@ -193,10 +193,6 @@
     {
       "name": "aust-1/vps-strasbourg-opt",
       "stars": 0
-    },
-    {
-      "name": "aust-1/github-stats",
-      "stars": 1
     },
     {
       "name": "DaVinciBot/.github",
@@ -227,11 +223,11 @@
       "stars": 1
     },
     {
-      "name": "aust-1/Alterdune",
+      "name": "aust-1/github-stats",
       "stars": 1
     },
     {
-      "name": "DaVinciBot/helloasso-webhooks",
+      "name": "aust-1/Alterdune",
       "stars": 1
     },
     {
@@ -252,6 +248,10 @@
     },
     {
       "name": "aust-1/CoreWatcher",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/helloasso-webhooks",
       "stars": 1
     },
     {
