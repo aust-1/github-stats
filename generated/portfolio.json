@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-23T23:40:30Z",
+  "generatedAt": "2026-11-24T15:00:38Z",
   "contributions": {
-    "commits": 4227,
+    "commits": 4237,
     "prs": 222,
     "issues": 246,
     "reviews": 5,
     "repos": 27
   },
   "stars": 112,
-  "linesChanged": 5214137,
+  "linesChanged": 5214548,
   "repoCount": 44,
   "languages": [
     {
@@ -83,7 +83,7 @@
     },
     {
       "name": "PLpgSQL",
-      "size": 636779,
+      "size": 644626,
       "color": "#336790"
     },
     {
@@ -108,7 +108,7 @@
     },
     {
       "name": "Svelte",
-      "size": 3209882,
+      "size": 3210781,
       "color": "#ff3e00"
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "name": "TypeScript",
-      "size": 2506885,
+      "size": 2509166,
       "color": "#3178c6"
     },
     {
@@ -143,20 +143,16 @@
       "stars": 0
     },
     {
-      "name": "DaVinciBot/CoupeDeRobotique",
-      "stars": 20
-    },
-    {
       "name": "DaVinciBot/cash",
       "stars": 5
     },
     {
-      "name": "aust-1/sudoku_solver",
-      "stars": 4
+      "name": "DaVinciBot/CoupeDeRobotique",
+      "stars": 20
     },
     {
-      "name": "aust-1/portfolio",
-      "stars": 1
+      "name": "aust-1/sudoku_solver",
+      "stars": 4
     },
     {
       "name": "DaVinciBot/formation",
@@ -165,6 +161,10 @@
     {
       "name": "aust-1/bourse-tracker",
       "stars": 0
+    },
+    {
+      "name": "aust-1/portfolio",
+      "stars": 1
     },
     {
       "name": "DaVinciBot/davincibot.fr",
@@ -179,11 +179,11 @@
       "stars": 1
     },
     {
-      "name": "aust-1/lectures-notes",
+      "name": "aust-1/deezer-export",
       "stars": 1
     },
     {
-      "name": "aust-1/deezer-export",
+      "name": "aust-1/lectures-notes",
       "stars": 1
     },
     {
@@ -223,7 +223,7 @@
       "stars": 1
     },
     {
-      "name": "aust-1/seterra-parisian-metro",
+      "name": "aust-1/Alterdune",
       "stars": 1
     },
     {
@@ -251,7 +251,7 @@
       "stars": 1
     },
     {
-      "name": "aust-1/Alterdune",
+      "name": "aust-1/seterra-parisian-metro",
       "stars": 1
     },
     {
