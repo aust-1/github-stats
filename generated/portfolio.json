@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T14:40:03Z",
+  "generatedAt": "2026-11-26T14:03:13Z",
   "contributions": {
     "commits": 4237,
     "prs": 222,
@@ -155,23 +155,15 @@
       "stars": 5
     },
     {
-      "name": "DaVinciBot/formation",
-      "stars": 2
-    },
-    {
       "name": "aust-1/bourse-tracker",
       "stars": 0
-    },
-    {
-      "name": "DaVinciBot/davincibot.fr",
-      "stars": 2
     },
     {
       "name": "DaVinciBot/Component-Lib",
       "stars": 1
     },
     {
-      "name": "aust-1/deezer-export",
+      "name": "aust-1/portfolio",
       "stars": 1
     },
     {
@@ -179,7 +171,7 @@
       "stars": 1
     },
     {
-      "name": "aust-1/portfolio",
+      "name": "aust-1/deezer-export",
       "stars": 1
     },
     {
@@ -189,6 +181,10 @@
     {
       "name": "DaVinciBot/DocVB",
       "stars": 1
+    },
+    {
+      "name": "DaVinciBot/davincibot.fr",
+      "stars": 2
     },
     {
       "name": "DaVinciBot/.github",
@@ -207,15 +203,19 @@
       "stars": 5
     },
     {
-      "name": "aust-1/LivInParis",
-      "stars": 2
-    },
-    {
       "name": "DaVinciBot/shared-workflows",
       "stars": 2
     },
     {
-      "name": "DaVinciBot/helloasso-webhooks",
+      "name": "DaVinciBot/formation",
+      "stars": 2
+    },
+    {
+      "name": "aust-1/LivInParis",
+      "stars": 2
+    },
+    {
+      "name": "aust-1/TaskBoard-widget",
       "stars": 1
     },
     {
@@ -223,15 +223,15 @@
       "stars": 1
     },
     {
-      "name": "aust-1/Alterdune",
-      "stars": 1
-    },
-    {
-      "name": "aust-1/TaskBoard-widget",
+      "name": "aust-1/seterra-parisian-metro",
       "stars": 1
     },
     {
       "name": "DeVinci-FabLab/home",
+      "stars": 1
+    },
+    {
+      "name": "DaVinciBot/helloasso-webhooks",
       "stars": 1
     },
     {
@@ -251,7 +251,7 @@
       "stars": 1
     },
     {
-      "name": "aust-1/seterra-parisian-metro",
+      "name": "aust-1/Alterdune",
       "stars": 1
     },
     {
